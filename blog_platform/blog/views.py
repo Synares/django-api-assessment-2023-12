@@ -1,5 +1,6 @@
 # blog/views.py
 from rest_framework import generics
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -37,9 +38,21 @@ class CommentListCreateView(generics.ListCreateAPIView):
     """
     List and create comments on post
     """
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        post_id = self.request.query_params.get('post_id')
+        if post_id is None:
+            raise ValidationError("post_id must be provided in the query parameters.")
+        return Comment.objects.filter(post_id=post_id)
+
+    def perform_create(self, serializer):
+        post_id = self.request.query_params.get('post_id')
+        if post_id is None:
+            raise ValidationError("post_id must be provided in the query parameters.")
+
+        serializer.save(post_id=post_id, author=self.request.user)
 
 
 class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):

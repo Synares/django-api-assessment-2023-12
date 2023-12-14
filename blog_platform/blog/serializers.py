@@ -32,7 +32,7 @@ class PostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', 'post', 'author', 'content', 'created_at']
+        fields = ['id', 'content', 'created_at']
 
     def validate_content(self, value):
         if len(value) < 5:
