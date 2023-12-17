@@ -2,18 +2,9 @@
 from rest_framework import generics
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .models import Post, Comment
-from .serializers import PostSerializer, CommentSerializer, ObtainTokenPairWithUserInfoSerializer
-
-
-class ObtainTokenPairWithUserInfoView(TokenObtainPairView):
-    serializer_class = ObtainTokenPairWithUserInfoSerializer
-
-
-class TokenRefreshWithUserInfoView(TokenRefreshView):
-    serializer_class = ObtainTokenPairWithUserInfoSerializer
+from .serializers import PostSerializer, CommentSerializer
 
 
 class PostListCreateView(generics.ListCreateAPIView):

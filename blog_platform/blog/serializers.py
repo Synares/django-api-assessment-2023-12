@@ -1,16 +1,7 @@
 # blog/serializers.py
 from rest_framework import serializers
-# blog/serializers.py
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import Post, Comment
-
-
-class ObtainTokenPairWithUserInfoSerializer(TokenObtainPairSerializer):
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        data['user'] = self.user.username
-        return data
 
 
 class PostSerializer(serializers.ModelSerializer):
