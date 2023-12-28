@@ -10,13 +10,11 @@ class PostListCreateViewTest(APITestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(username='jasim', password='12345')
-
-        token_url = reverse('token_obtain_pair')
-
+        token_url = reverse('api_token_auth')
         response = self.client.post(token_url, {'username': 'jasim', 'password': '12345'})
-        self.token = response.data['access']
+        self.token = response.data['token']
 
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.token)
+        self.client.defaults['HTTP_AUTHORIZATION'] = 'Token ' + self.token
 
         self.url = reverse('post-list-create')
 

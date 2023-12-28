@@ -19,7 +19,7 @@ class TestPostSerializer(TestCase):
     def test_post_serializer_invalid_data(self):
         invalid_data = {
             'title': 'Hi',
-            'content': 'Testing invalid content',
+            'content': 'Testing',
             'author': self.user.id
         }
 
